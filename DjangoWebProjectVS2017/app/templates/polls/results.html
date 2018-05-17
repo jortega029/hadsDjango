@@ -1,0 +1,9 @@
+﻿<h2>{{ title }}</h2>
+<h3>{{ question.texto }}</h3>
+{% if message == 'Has acertado!!' %}
+    <h3 style="color:forestgreen">{{ message }}</h3>
+{% else %}
+    <h3 style="color:red">{{ message }}</h3>
+{% endif %}
+<a href="{% url 'chart' question.id %}"><h3>Ver grafica</h3></a><br />
+<a href="{% url 'index' %}"><h3>Contestar otra pregunta</h3></a>
