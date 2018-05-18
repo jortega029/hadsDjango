@@ -110,20 +110,23 @@ def vote(request, question_id):
         return HttpResponseRedirect(reverse('results', args=(p.id,selected_choice.id,)))
 
 def question_new(request):
+        message=''
         if request.method == "POST":
             form = AnadirForm(request.POST)
             if form.is_valid():
                 question = form.save(commit=False)
                 question.pub_date=datetime.now()
                 question.save()
+                message = 'Pregunta añadida correctamente'
                 #return redirect('detail', pk=question_id)
                 #return render(request, 'polls/choice_new.html', {'title':'Respuestas posibles','question': question})
         else:
             form = AnadirForm()
 
-        return render(request, 'polls/question_new.html', {'title':'Añadir nueva pregunta','form': form})
+        return render(request, 'polls/question_new.html', {'title':'Añadir nueva pregunta','form': form,'message':message})
 
 def choice_add(request, question_id):
+        message = ''
         question = Pregunta.objects.get(id = question_id)
         form = RespuestasForm()
         hayCorrecta = False
@@ -144,6 +147,7 @@ def choice_add(request, question_id):
                             choice.pregunta = question
                             choice.votos = 0
                             choice.save()
+                            message = 'Se ha añadido una nueva respuesta'
                             #form.save()
                 else:
                     form = RespuestasForm(request.POST)
@@ -152,8 +156,9 @@ def choice_add(request, question_id):
                         choice.pregunta = question
                         choice.votos = 0
                         choice.save()
+                        message = 'Se ha añadido una nueva respuesta'
                         #form.save()
-            return render(request, 'polls/choice_new.html', {'title':'Pregunta:'+ question.texto,'form': form})
+            return render(request, 'polls/choice_new.html', {'title':'Pregunta:'+ question.texto,'form': form,'message':message})
 
 
 def correctaSeleccionado(request):

@@ -5,11 +5,11 @@ signing
 validators
 handlers
 urlresolvers
-files
+checks
 wsgi
 exceptions
 serializers
 management
 cache
 paginator
-checks
+files
